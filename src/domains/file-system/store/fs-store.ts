@@ -15,15 +15,15 @@ export interface IFileStructure {
 }
 
 interface IFileSystemStore {
-  files: IFileStructure[]
+  directory: IFileStructure
   singleFile: IFile | null
-  setFiles: (files: IFileStructure[]) => void
+  setDirectory: (files: IFileStructure) => void
   setSingleFile: (file: IFile) => void
 }
 
 export const useFileSystemStore = create<IFileSystemStore>((set) => ({
-  files: [],
+  directory: { directories: [], files: [] },
   singleFile: null,
-  setFiles: (files: IFileStructure[]) => set({ files }),
+  setDirectory: (files: IFileStructure) => set({ directory: files }),
   setSingleFile: (file: IFile) => set({ singleFile: file }),
 }))

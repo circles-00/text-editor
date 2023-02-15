@@ -1,6 +1,16 @@
 import { readdir } from 'fs/promises'
 import { join } from 'path'
 
+const sortObjectByKeys = (obj: Record<string, any>) => {
+  return Object.keys(obj)
+    .sort()
+    .filter((key) => key !== '.git')
+    .reduce((result, key) => {
+      result[key] = obj[key]
+      return result
+    }, {})
+}
+
 export const getSingleFile = async (filePath: string) => {
   return {
     name: filePath.split('/').pop(),
@@ -28,6 +38,9 @@ export const getAllFilesRecursively = async (dir: string) => {
       }
     })
   )
+
+  fileGroups.files.sort((a, b) => a.name.localeCompare(b.name))
+  fileGroups.directories = sortObjectByKeys(fileGroups.directories)
 
   return fileGroups
 }
