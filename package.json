@@ -39,9 +39,12 @@
     "node": "14.18.0 || >=16.0.0"
   },
   "dependencies": {
+    "@headlessui/react": "1.7.11",
+    "@heroicons/react": "2.0.15",
     "@monaco-editor/react": "4.4.6",
     "esbuild": "0.17.8",
     "monaco-editor": "0.35.0",
-    "vite-tsconfig-paths": "4.0.5"
+    "vite-tsconfig-paths": "4.0.5",
+    "zustand": "4.3.3"
   }
 }

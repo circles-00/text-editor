@@ -13,6 +13,13 @@ export const getMainMenuTemplate = (window: BrowserWindow) =>
             handleFileOpen(window)
           },
         },
+        {
+          label: 'Open Folder',
+          accelerator: 'CmdOrCtrl+K CmdOrCtrl+O',
+          click: () => {
+            handleFileOpen(window, true)
+          },
+        },
       ],
     },
     {

@@ -96,6 +96,8 @@ window.onmessage = (ev) => {
 setTimeout(removeLoading, 4999)
 
 // Example context bridge communication
-contextBridge.exposeInMainWorld('electronAPI', {
+contextBridge.exposeInMainWorld('electronFs', {
   openFile: () => ipcRenderer.invoke('dialog:openFile'),
+  onOpenDirectory: (callback) => ipcRenderer.on('fs:directory-open', callback),
+  onOpenFile: (callback) => ipcRenderer.on('fs:file-open', callback),
 })

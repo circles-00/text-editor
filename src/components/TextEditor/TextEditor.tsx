@@ -23,6 +23,12 @@ export const TextEditor: FC<ITextEditorProps> = () => {
   const [value, setValue] = useState('')
 
   return (
-    <Editor height="100vh" width="100vw" language="javascript" value={value} />
+    <Editor
+      className="pt-2"
+      height="100vh"
+      width="90%"
+      language="javascript"
+      value={value}
+    />
   )
 }
