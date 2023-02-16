@@ -1,34 +1,36 @@
-import Editor, { loader } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
-import { FC, useState } from 'react'
+import { FC, useRef, useState } from 'react'
+import { useEffectOnce } from '../../hooks/use-effect-once'
 
-import type MonacoNamespace from 'monaco-editor'
 import { loadMonacoWorker } from '../../utils'
-
-type TMonaco = typeof MonacoNamespace
 
 interface ITextEditorProps {}
 
-const loadMonacoEditor = async () => {
-  loader.config({ monaco })
-  const monacoInstance = await loader.init()
-  monacoInstance.languages.typescript.javascriptDefaults.setEagerModelSync(true)
-
-  loadMonacoWorker()
-}
-
 export const TextEditor: FC<ITextEditorProps> = () => {
-  loadMonacoEditor()
-
+  const editorRef = useRef<HTMLDivElement>(null)
+  loadMonacoWorker()
   const [value, setValue] = useState('')
 
-  return (
-    <Editor
-      className="pt-2"
-      height="100vh"
-      width="90%"
-      language="javascript"
-      value={value}
-    />
-  )
+  useEffectOnce(() => {
+    if (editorRef.current) {
+      monaco.editor.create(editorRef.current, {
+        value:
+          "// First line\nfunction hello() {\n\talert('Hello world!');\n}\n// Last line",
+        language: 'typescript',
+        roundedSelection: false,
+        scrollBeyondLastLine: false,
+        readOnly: false,
+      })
+
+      monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true)
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        target: monaco.languages.typescript.ScriptTarget.ES2016,
+        jsx: monaco.languages.typescript.JsxEmit.ReactJSX,
+        allowNonTsExtensions: true,
+        allowJs: true,
+      })
+    }
+  })
+
+  return <div className="p-5 h-[100%] w-[100%]" ref={editorRef}></div>
 }

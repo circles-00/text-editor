@@ -16,7 +16,8 @@
     "build": "tsc && vite build && electron-builder",
     "preview": "vite preview",
     "pree2e": "vite build --mode=test",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "rebuild": "electron-rebuild"
   },
   "devDependencies": {
     "@playwright/test": "1.29.2",
@@ -41,10 +42,14 @@
   "dependencies": {
     "@headlessui/react": "1.7.11",
     "@heroicons/react": "2.0.15",
-    "@monaco-editor/react": "4.4.6",
+    "electron-rebuild": "3.2.9",
     "esbuild": "0.17.8",
     "monaco-editor": "0.35.0",
+    "node-pty": "0.10.1",
+    "socket.io": "4.6.0",
+    "socket.io-client": "4.6.0",
     "vite-tsconfig-paths": "4.0.5",
+    "xterm": "5.2.0-beta.28",
     "zustand": "4.3.3"
   }
 }

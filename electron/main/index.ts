@@ -1,8 +1,10 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
-import { handleFileOpen, loadFileSystemFunctions } from '../modules'
+import { loadFileSystemFunctions } from '../modules'
 import { buildMenu } from '../modules/menu'
+import { Server } from 'socket.io'
+import { spawn } from 'node-pty'
 
 // The built directory structure
 //
@@ -76,6 +78,30 @@ async function createWindow() {
     return { action: 'deny' }
   })
 }
+
+const wsServer = new Server({ cors: { origin: '*' } })
+
+wsServer.on('connection', (socket) => {
+  console.log('a user connected', socket.id)
+
+  const ptyProcess = spawn('zsh', [], {
+    name: 'xterm-color',
+    cols: 80,
+    rows: 30,
+    cwd: process.env.HOME,
+    env: process.env,
+  })
+
+  ptyProcess.onData((data) => {
+    socket.emit('data', data)
+  })
+
+  socket.on('data', (data) => {
+    ptyProcess.write(data)
+  })
+})
+
+wsServer.listen(3000)
 
 app.whenReady().then(() => {
   createWindow()

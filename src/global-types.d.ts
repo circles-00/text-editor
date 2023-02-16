@@ -8,5 +8,10 @@ declare global {
       ) => void
       onOpenFile: (callback: (event: any, files: IFile) => void) => void
     }
+    electronWs: {
+      onConnect: (callback: (data) => void) => void
+      onDisconnect: (callback: (data) => void) => void
+      emit: (event: string, payload: any) => void
+    }
   }
 }
