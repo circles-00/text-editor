@@ -98,6 +98,7 @@ setTimeout(removeLoading, 4999)
 // Example context bridge communication
 contextBridge.exposeInMainWorld('electronFs', {
   openFile: () => ipcRenderer.invoke('dialog:openFile'),
+  readFile: (path: string) => ipcRenderer.invoke('fs:readFile', path),
   onOpenDirectory: (callback) => ipcRenderer.on('fs:directory-open', callback),
   onOpenFile: (callback) => ipcRenderer.on('fs:file-open', callback),
 })

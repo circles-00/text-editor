@@ -1,6 +1,9 @@
 import { FC, useMemo, useState } from 'react'
 import { DocumentIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { FileExplorer } from './components/FileExplorer'
+import { TreeContextMenuProvider } from './components/TreeExplorer/context'
+import { TreeContextMenu } from './components/TreeExplorer/components'
+import { Tree } from './components/TreeExplorer/Tree'
 
 interface IIconProps {
   isActive?: boolean
@@ -43,6 +46,29 @@ export const Sidebar: FC<ISidebarProps> = () => {
     setCurrentItem(index)
   }
 
+  const root = {
+    title: 'root',
+    children: [
+      {
+        title: 'Child1',
+        children: [
+          {
+            title: 'Child2',
+            children: [
+              {
+                title: 'Child2-1',
+              },
+              {
+                title: 'Child2-2',
+                children: [],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  }
+
   return (
     <div className="flex flex-row">
       <div className="resize relative p-2 flex flex-col items-center justify-start h-screen w-[60px] bg-slate-800 border-r-2 border-slate-500">
@@ -54,7 +80,11 @@ export const Sidebar: FC<ISidebarProps> = () => {
           )
         })}
       </div>
-      <FileExplorer />
+      {/* <FileExplorer /> */}
+      <TreeContextMenuProvider>
+        <TreeContextMenu />
+        <Tree root={root} />
+      </TreeContextMenuProvider>
     </div>
   )
 }

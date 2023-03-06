@@ -1,11 +1,15 @@
 import { FC } from 'react'
-import { useFileSystemStore } from '../../../../domains/file-system'
+import { IFile, useFileSystemStore } from '../../../../domains/file-system'
 
 interface IFileExplorerProps {}
 
 export const FileExplorer: FC<IFileExplorerProps> = () => {
-  const { directory, singleFile } = useFileSystemStore((state) => state)
-  console.log('directory', directory)
+  const { directory, setCurrentFile } = useFileSystemStore((state) => state)
+
+  const openCurrentFile = async (file: IFile) => {
+    const fileContent = await window.electronFs.readFile(file.path)
+    setCurrentFile(fileContent)
+  }
 
   return (
     <div className="flex flex-col justify-start bg-slate-700 h-screen w-[300px]">
@@ -20,7 +24,11 @@ export const FileExplorer: FC<IFileExplorerProps> = () => {
             )
           )}
           {directory.files.map((file, index) => (
-            <p key={index} className="text-white p-1 text-sm">
+            <p
+              key={index}
+              className="text-white p-1 text-sm cursor-pointer"
+              onClick={() => openCurrentFile(file)}
+            >
               {file.name}
             </p>
           ))}

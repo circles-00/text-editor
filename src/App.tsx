@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { TextEditor } from './components'
 import { Sidebar } from './components/Sidebar'
 import { Terminal } from './components/Terminal'
@@ -7,9 +8,9 @@ function App() {
   useLoadIpcListeners()
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row overflow-hidden">
       <Sidebar />
-      <div className="flex flex-col w-screen">
+      <div className="flex flex-col w-screen h-[100vh]">
         <TextEditor />
         <Terminal />
       </div>

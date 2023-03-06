@@ -7,6 +7,7 @@ declare global {
         callback: (event: any, files: IFileStructure) => void
       ) => void
       onOpenFile: (callback: (event: any, files: IFile) => void) => void
+      readFile: (path: string) => Promise<string>
     }
     electronWs: {
       onConnect: (callback: (data) => void) => void

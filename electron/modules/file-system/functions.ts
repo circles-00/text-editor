@@ -1,5 +1,6 @@
 import { app, BrowserWindow, dialog } from 'electron'
 import { getAllFilesRecursively, getSingleFile } from './utils'
+import { readFileSync } from 'fs'
 
 export const handleFileOpen = async (
   mainWindow: BrowserWindow,
@@ -25,4 +26,15 @@ export const handleFileOpen = async (
 
   mainWindow.webContents.send(responseEventName, allFilesInDirectory)
   return filePath
+}
+
+export const readFileFromPath = (
+  mainWindow: BrowserWindow,
+  filePath: string
+) => {
+  const file = readFileSync(filePath, { encoding: 'utf-8' })
+
+  mainWindow.webContents.send('fs:read-file', file)
+
+  return file
 }

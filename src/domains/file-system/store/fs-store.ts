@@ -19,6 +19,8 @@ interface IFileSystemStore {
   singleFile: IFile | null
   setDirectory: (files: IFileStructure) => void
   setSingleFile: (file: IFile) => void
+  currentFile: string | null
+  setCurrentFile: (file: string | null) => void
 }
 
 export const useFileSystemStore = create<IFileSystemStore>((set) => ({
@@ -26,4 +28,6 @@ export const useFileSystemStore = create<IFileSystemStore>((set) => ({
   singleFile: null,
   setDirectory: (files: IFileStructure) => set({ directory: files }),
   setSingleFile: (file: IFile) => set({ singleFile: file }),
+  currentFile: null,
+  setCurrentFile: (file: string | null) => set({ currentFile: file }),
 }))
